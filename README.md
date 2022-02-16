@@ -18,3 +18,27 @@ Once finished with your project, select File > Save now one last time. Then sele
 Result: [Skelly's Hell Loop](https://scratch.mit.edu/projects/644202571)
 
 ## WEEK 2 - C
+For local setup download CS50 library:
+```
+https://github.com/cs50/libcs50
+```
+On Windows include it in your CMakeLists.txt file
+```
+add_executable(CS50_22_Intro_to_CS
+        "Week 2/hello_world.c"
+        "Week 2/libcs50-10.1.1/src/cs50.c")
+```
+### Problem Set 1
+
+#### Hello
+[Hello - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/1/hello/)
+
+Requirements:
+
+* Get user input
+* join input into output string
+* output "hello, {input}"
+
+#### Mario
+
+#### Credit
