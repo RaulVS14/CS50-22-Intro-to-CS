@@ -10,7 +10,8 @@ submit:
 compile:
 	make ${args}
 
-l_compile:
-	 gcc ${args}.c -o ${args} -lcs50
 run:
+	gcc ${args}.c -o ${args} -lcs50 && ./${args}
+
+runs:
 	./${args}
