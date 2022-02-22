@@ -122,7 +122,7 @@ Requirements:
 Requirements:
 * Provide key via command-line argument
   * If key not long enough - "Key must contain 26 chars"
-  * If key missing or too many keys - "Usage: ./substitution key"
+  * If the key is missing or too many keys - "Usage: ./substitution key"
   * Validate key
     * Only letters
     * No repeating letters
