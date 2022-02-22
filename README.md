@@ -1,6 +1,6 @@
 # CS50 Intro to Computer Science
 
-## WEEK 1 - Scratch
+## WEEK 0 - Scratch
 
 ### Problem Set 0
 
@@ -17,7 +17,7 @@ Once finished with your project, select File > Save now one last time. Then sele
 
 Result: [Skelly's Hell Loop](https://scratch.mit.edu/projects/644202571)
 
-## WEEK 2 - C
+## WEEK 1 - C
 ### Windows
 For local setup download CS50 library:
 ```
@@ -69,3 +69,19 @@ Requirements:
   * // AMEX: 15 digit, 34 || 37
   * // MASTERCARD: 16 digit, starts with 51-55
   * // VISA: 13 || 16, starts with 4
+
+## WEEK 2 - Arrays
+
+### LAB 2
+[Lab 2: Scrabble - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/2/)
+
+Requirements:
+* Fill in the logic for compute_score function
+  * Uses variable named POINTS array for assigning score for each letter in word
+  * All characters that are not letters are worth 0 points
+  * Lower- and uppercase are worth the equal amount of points
+  * Function returns score result for the word provided as argument
+* Main function needs to provide output depending on players scores
+  * Player 1 wins!
+  * Player 2 wins!
+  * Tie!
