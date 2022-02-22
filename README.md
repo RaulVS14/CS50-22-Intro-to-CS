@@ -85,3 +85,33 @@ Requirements:
   * Player 1 wins!
   * Player 2 wins!
   * Tie!
+
+### Problem Set 2
+
+#### Readability
+[Readability - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/2/readability/)
+
+Requirements:
+* Get user input text
+* Count the letters in the text
+  * Only letters - no numbers, punctuation or other symbols
+  * function name **count_letters**
+    * takes argument **string text**
+    * returns **int letter_count**
+* Count words in the text
+  * Word is any sequence of characters separated by space
+  * function name count_words
+    * takes argument **string text**
+    * returns **int word_count**
+* Count sentences in the text
+  * Sentence ends with ., !, ?
+  * function name count_sentences
+    * takes **argument string text**
+    * returns **int sentence_count**
+* Calculate 100 word averages
+  * count/nr_words * 100
+* Calculate grade using formula
+  * index = 0.0588 * letter_avg - 0.296 * sentence_avg - 15.8
+* Output result
+  * if grade equal or higher than 16 - "Grade 16+"
+  * if grade lower than 1 - "Before Grade 1"
