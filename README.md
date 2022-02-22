@@ -115,3 +115,20 @@ Requirements:
 * Output result
   * if grade equal or higher than 16 - "Grade 16+"
   * if grade lower than 1 - "Before Grade 1"
+
+#### Substitution
+[Substitution - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/2/substitution/)
+
+Requirements:
+* Provide key via command-line argument
+  * If key not long enough - "Key must contain 26 chars"
+  * If key missing or too many keys - "Usage: ./substitution key"
+  * Validate key
+    * Only letters
+    * No repeating letters
+* Encrypt provided message using the key
+  * Prompting for - "plaintext: "
+* Return result
+  * Prefixed by - "ciphertext: "
+  * Case remains same after encryption
+  * Only replace alphabetical characters
