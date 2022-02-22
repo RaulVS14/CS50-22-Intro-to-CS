@@ -46,5 +46,26 @@ Requirements:
 * output "hello, {input}"
 
 #### Mario
+[Mario - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/1/mario/more/)
+
+Requirements:
+Program takes input integer between 1 and 8, inclusive
+Outputs pyramid corresponding to Mario game
+```
+   #  #
+  ##  ##
+ ###  ###
+####  ####
+```
+Height must be the amount entered by user
 
 #### Credit
+[Credit - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/1/credit/)
+
+Requirements:
+* Get user input long int
+* Validate checksum - Luhn’s Algorithm
+* Check if card validates to corresponding card rules:
+  * // AMEX: 15 digit, 34 || 37
+  * // MASTERCARD: 16 digit, starts with 51-55
+  * // VISA: 13 || 16, starts with 4
