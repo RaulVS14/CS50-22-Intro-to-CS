@@ -142,3 +142,17 @@ Requirements:
 * Run three provided compiled C programs sort1, sort2, sort3
 * Determine which sorting algorithm they are running
 * Provide answers to answers.txt file
+
+### Problem Set 3
+
+#### Plurality
+
+Requirements:
+* Complete vote function
+  * single argument, string name(Candidate name)
+  * if a match, increase corresponding vote count
+  * returns true or false
+* Complete print_winner function
+  * print out name of the candidate who received the most votes in the election
+  * in case of tie print out names of each winning candidates, each on separate line
+  
