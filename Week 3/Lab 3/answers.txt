@@ -1,0 +1,11 @@
+sort1 uses: bubble sort
+
+How do you know?:  because it takes more time when it's random. More steps to run.
+
+sort2 uses: merge sort
+
+How do you know?: because when size grows, time it takes doesn't that much compared to others
+
+sort3 uses: selection sort
+
+How do you know?: because it takes similar order of time even if the set is reversed

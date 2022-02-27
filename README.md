@@ -132,3 +132,13 @@ Requirements:
   * Prefixed by - "ciphertext: "
   * Case remains same after encryption
   * Only replace alphabetical characters
+
+## WEEK 3 - Algorithms
+
+### LAB 3
+[Lab 3: Sort - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/3/)
+
+Requirements:
+* Run three provided compiled C programs sort1, sort2, sort3
+* Determine which sorting algorithm they are running
+* Provide answers to answers.txt file
