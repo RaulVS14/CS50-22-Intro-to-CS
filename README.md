@@ -155,4 +155,28 @@ Requirements:
 * Complete print_winner function
   * print out name of the candidate who received the most votes in the election
   * in case of tie print out names of each winning candidates, each on separate line
-  
+
+
+#### Tideman
+* Complete vote function
+  * function takes arguments int rank, string name, array ranks
+  * updates the ranks array to indicate voter preference
+    * ranks[i] represents user i'th preference
+  * return true or false
+* Complete the record_preference function
+  * called for each voter once
+  * takes argument array ranks
+  * should update global preferences array to add current voter preference
+    * preference[i][j] - voters who prefer i candidate over candidate j
+* Complete the add_pairs function
+  * should add the pair of candidates where one is preferred to other to pairs array
+  * when tied don't add
+  * update global pair_count
+* Complete the sort_pairs function
+  * sort pairs array  in decreasing order of strength of victory
+  * if equal order doesn't matter
+* Complete the lock_pairs function
+  * create locked graph
+    * add all edges in decreasing order of victory strength so long as the edge would not create a cycle
+* Complete the print_winner function
+  * print out the name of the candidate who is the source(no arrows lead to it) of the graph
