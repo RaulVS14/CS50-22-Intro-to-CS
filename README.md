@@ -146,7 +146,7 @@ Requirements:
 ### Problem Set 3
 
 #### Plurality
-
+[Plurality - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/3/plurality/)
 Requirements:
 * Complete vote function
   * single argument, string name(Candidate name)
@@ -158,6 +158,7 @@ Requirements:
 
 
 #### Tideman
+[Tideman - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/3/tideman/)
 * Complete vote function
   * function takes arguments int rank, string name, array ranks
   * updates the ranks array to indicate voter preference
@@ -180,3 +181,21 @@ Requirements:
     * add all edges in decreasing order of victory strength so long as the edge would not create a cycle
 * Complete the print_winner function
   * print out the name of the candidate who is the source(no arrows lead to it) of the graph
+
+## WEEK 4 - Memory
+
+### Lab 4
+[Lab 4: Volume - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/4/)
+
+Requirements:
+* 3 cmd arguments
+  * input - original file
+  * output - new file
+  * factor - how much original audio should be scaled
+* first read and write header to output file
+  * number of bytes is defined in HEADER_SIZE
+* read rest of data by sample of 2-bytes at a time
+  * multiply sample with factor
+  * write it to output
+* if malloc used
+  * must not leak any memory
