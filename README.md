@@ -45,7 +45,7 @@ Requirements:
 * join input into output string
 * output "hello, {input}"
 
-#### Mario
+#### Mario (More)
 [Mario - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/1/mario/more/)
 
 Requirements:
@@ -199,3 +199,16 @@ Requirements:
   * write it to output
 * if malloc used
   * must not leak any memory
+
+### Problem Set 4
+#### Filter(More)
+Requirements
+* Implement following functions in helpers.c
+  * grayscale
+    * should turn image into black and white image
+  * reflect
+    * should reflect image horizontally
+  * blur
+    * should turn image into a box-blurred version of the same image
+  * edges
+    * should highlight edges between objects
