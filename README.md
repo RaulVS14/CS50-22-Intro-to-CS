@@ -201,6 +201,7 @@ Requirements:
   * must not leak any memory
 
 ### Problem Set 4
+
 #### Filter(More)
 Requirements
 * Implement following functions in helpers.c
@@ -212,3 +213,5 @@ Requirements
     * should turn image into a box-blurred version of the same image
   * edges
     * should highlight edges between objects
+
+#### Recover
