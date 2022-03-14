@@ -215,3 +215,22 @@ Requirements
     * should highlight edges between objects
 
 #### Recover
+Requirements:
+
+* Implement program recover in file called recover/recover.c
+  * Accepts 1 command-line argument
+    * name of the image from which to recover JPEGs
+    * If one is not provided
+      * Remind correct usage
+      * Return 1
+  * If the image cannot be opened
+    * inform the user
+    * Return 1
+  * Files you generate
+    * name pattern: ***.jpg
+    * *** - three-digit number 000(zero-padded) - %03i
+  * If malloc is used
+    * must not leak any memory
+  * All opened files should be closed
+
+## WEEK 5 - Data structures
