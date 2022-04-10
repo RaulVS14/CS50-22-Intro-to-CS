@@ -234,3 +234,34 @@ Requirements:
   * All opened files should be closed
 
 ## WEEK 5 - Data structures
+
+### Lab 5
+[Lab 5: Inheritance - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/5/)
+
+Requirements
+ * implement function create_family 
+   * takes 1 argument
+     * int generation
+   * should allocate one person for each member of the family of specified number of generations
+   * returns pointer to the person in the youngest generation
+   * each person should have alleles assigned to them
+     * oldest generation randomly chosen
+     * younger generation should inherit one allele(random) from each parent
+   * each person should have parents assigned to them
+     * oldest generation should have both parents set to NULL
+     * younger generation should have parents array of two pointers, each pointing to different parent
+   * Functionality logic
+     * malloc sizeof(person)
+     * generations > 1
+       * set parent pointers
+       * assign alleles
+     * generation == 1
+       * no parent pointers
+       * random alleles
+ * implement function free_family
+   * accept 1 argument
+     * pointer to person
+   * then free memory for that person
+   * then recursively free memory for all their ancestors
+     * free both parents before freeing child
+     * free child
