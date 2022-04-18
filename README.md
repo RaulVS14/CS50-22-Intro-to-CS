@@ -268,6 +268,7 @@ Requirements
 
 ### Problem Set 5
 
+#### Speller
 [Speller - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/5/speller/)
 
 Requirements:
@@ -295,7 +296,18 @@ Requirements:
   * Must not leak any memory, use valgrind
   * Hash function should be your own, not from online
 
+## WEEK 5 - Python
 
+### Lab 6
 
+### Problem Set 6
+
+#### Hello
+
+#### Mario
+
+#### Readability
+
+#### DNA
 
 
