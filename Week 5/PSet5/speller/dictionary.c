@@ -44,7 +44,7 @@ bool check(const char *word)
         if (strcasecmp(word, toCheck->word) == 0)
         {
             return true;
-        }check50 cs50/problems/2022/x/speller
+        }
 
         toCheck = toCheck->next;
     }
