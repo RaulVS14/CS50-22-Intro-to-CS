@@ -265,3 +265,37 @@ Requirements
    * then recursively free memory for all their ancestors
      * free both parents before freeing child
      * free child
+
+### Problem Set 5
+
+[Speller - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/5/speller/)
+
+Requirements:
+  * Implement load, hash, size, check and unload
+    * Effectively as you can use hash table
+  * Don’t change speller.c or Makefile
+  * Can alter dictionary.c to complete the implementations 
+    * Can’t alter declarations
+  * Check
+    * must be case-insensitive
+    * return true for words actually in dictionary
+    * don’t hardcode common words
+    * Possessive is only allowed if it is in dictionary
+    * can take only text variable
+    * any preprocessed dictionary can’t be saved on disc to improve efficiency
+  * Assumptions that can be made
+    * any dictionary passed will be alphabetically sorted - one word per line, each ending with \n
+    * Dictionary contains at least one word
+    * Words in dictionary won't exceed the LENGTH constant
+    * No word will appear twice
+    * Each word will contain lowercase alphabetical characters
+    * Possibly apostrophes
+    * No word will start with apostrophes
+    * Check will be passed only words that correspond to required rules, defined here before - apostrophe, lowercase, uppercase, alphabetical
+  * Must not leak any memory, use valgrind
+  * Hash function should be your own, not from online
+
+
+
+
+
