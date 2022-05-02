@@ -324,11 +324,55 @@ Requirements:
 ### Problem Set 6
 
 #### Hello
+[Hello - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/6/hello/)
 
-#### Mario
+Requirements:
+* write program hello.py that prompts for user's name and prints `hello, {name}`
 
+#### Mario (More)
+[Mario - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/6/mario/more/)
+
+Requirements:
+ * Write `mario.py` program
+   * recreates half-pyramids using `#`
+   * prompts user with `get_int` to get half-pyramid height (1-8, inclusive)
+     * if user fails to provide positive integer, re-prompt
+   * generate desired half-pyramids(height: 4 hashes, width: 4 hashes(for each half-pyramid), gap: 2 spaces)
+   * no additional spaces afeter the last set of hashes on each row
+   * bottom-left corner aligned with left-hand edge of your terminal window
+
+#### Credit
+[Credit - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/6/credit/)
+
+Requirements:
+ * Implement `credit.py` program
+   * prompts user for credit card number
+   * prints where it is valid or invalid using Luhn's algorithm and card specific parameters
+     * AMEX\n - starts with 34 or 37 and is 15 characters long
+     * MASTERCARD\n - starts with 51, 52, 53, 54 or 55 and is 16 characters long
+     * VISA\n - starts with 4 and is 13 or 16 characters long
+     * INVALID\n
+   * you may assume the user's input will be entirely numeric
+   
 #### Readability
+[Readability - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/6/readability/)
+
+Requirements:
+ * Implement `readability.py`
+   * prompts user to input some text
+     * get_string to capture user input
+   * outputs the grade level for the text
+     * uses Coleman-Liau index to valuate
+     * count letters, words and sentences
+       * letter is any character from a to z or A to Z
+       * character seperated by spaces count as a word
+       * occurrence of period, exclamation point, or question mark indicates end of sentence
+     * formula: 0.0588 * L - 0.296 * S - 15.8
+       * L - average number of letters per 100 words in the text
+       * S 0 average number of sentences per 100 words in the text
+     * prints value: "Before Grade 1" (<1), "Grade X" (X - rounded to nearest integer 1-16) ,"Grade 16+" (>16)
 
 #### DNA
+[DNA - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/6/dna/)
 
 
