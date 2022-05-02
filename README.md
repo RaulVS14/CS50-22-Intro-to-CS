@@ -296,10 +296,31 @@ Requirements:
   * Must not leak any memory, use valgrind
   * Hash function should be your own, not from online
 
-## WEEK 5 - Python
+## WEEK 6 - Python
 
 ### Lab 6
+[Lab 6: World Cup - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/6/)
 
+Requirements:
+ * Complete the implementation of tournament.py
+   * Simulates N number of tournaments and outputs each team’s probability of winning
+   * In _main_ function read team data from CSV
+     * Add each team to the list teams
+     * File will be provided as a command-line argument
+     * Access it using sys.arg[1]
+     * Use csv.DictReader for reading
+     * By default all values read from the file will be strings
+     * Append each team to teams dictionary
+   * Implement _simulate_tournament_ function
+     * should accept single argument teams as input
+     * it is list of teams
+     * should repeatedly simulate rounds until you're left with one team
+     * returns name of the winner
+     * you should not assume the number of teams in the tournament, but you may assume it will be a power of 2
+   * Implement _simulate_tournament_ in _main_ function
+     * run N number of tournament simulations
+     * keep track how many times each team wins in the counts dictionary
+     
 ### Problem Set 6
 
 #### Hello
