@@ -375,4 +375,20 @@ Requirements:
 #### DNA
 [DNA - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/6/dna/)
 
-
+Requirements:
+* implement `dna.py`
+  * program should require
+    * first command-line argument the name of a CSV file containing STR counts for list of individuals
+    * second command-line argument the name of a text file containing the DNA sequence to identify
+    * if correct number of arguments is provided, you can assume that the files provided are correct (structure, name, type)
+  * program should print error
+    * when command-line argument count is incorrect
+  * program should
+    * open CSV and read contents into memory
+      * you may assume that the first row of CSV will be the column names
+      * first column will be word `name` and the remaining columns will be the STR sequences themselves
+    * open the DNA sequence and read contents into memory
+    * compute the longest run of consecutive repeats of the STR in the DNA sequence to identify. Utilize the helper function - `longest_match`
+    * output name of the matching individual when STR counts match exactly
+      * you may assume that STR counts will not match more than one individual
+    * output `No match`, when STR do not match exactly with any of the individuals in the CSV file
