@@ -392,3 +392,16 @@ Requirements:
     * output name of the matching individual when STR counts match exactly
       * you may assume that STR counts will not match more than one individual
     * output `No match`, when STR do not match exactly with any of the individuals in the CSV file
+
+## Week 7 - SQL
+
+### Lab 7
+[Lab 7: Songs - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/7/)
+
+### Problem set 7
+
+#### Movies
+[Movies - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/7/movies/)
+
+#### Fiftyville
+[Fiftyville - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/7/fiftyville/)
