@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <title>Trivia!</title>
+    <script>
+        // Add code to check answers to questions
+        document.addEventListener("DOMContentLoaded", () => {
+            const choices = document.querySelectorAll(".multiple-choice");
+            const validation = (el, condition) => {
+                el.classList.remove('correct');
+                el.classList.remove('incorrect');
+                let text;
+                if (condition) {
+                    el.classList.add('correct');
+                    text = "Correct!";
+                } else {
+                    el.classList.add('incorrect');
+                    text = "Incorrect!";
+                }
+                return text;
+            }
+            const multipleChoiceHandler = (ev) => {
+                const feedback = document.querySelector("#multiple-output");
+                feedback.textContent = validation(ev.target, ev.target.dataset.correct === "true");
+                choices.forEach((el) => {
+                    el.removeEventListener('click', multipleChoiceHandler);
+                });
+            }
+            choices.forEach((el) => {
+                el.addEventListener('click', multipleChoiceHandler);
+            });
+            // Free response
+            const confirmBtn = document.querySelector("#confirm");
+            confirmBtn.addEventListener('click', () => {
+                const feedback = document.querySelector("#free-output");
+                const answer = document.querySelector("#answer");
+                feedback.textContent = answer.value ? validation(answer, answer.value.toLowerCase() === "euro") : "";
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Trivia!</h1>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Part 1: Multiple Choice </h2>
+            <hr>
+            <!-- Multiple choice question here -->
+            <h3>Which is the largest lake in Estonia?</h3>
+            <div id="multiple-output" class="output"></div>
+            <button class="multiple-choice" data-correct="true">Lake Peipus</button>
+            <button class="multiple-choice" data-correct="false">Lake Vorts Jarv</button>
+            <button class="multiple-choice" data-correct="false">Lake Ezers</button>
+            <button class="multiple-choice" data-correct="false">Lake Pihkva</button>
+        </div>
+
+        <div class="section">
+            <h2>Part 2: Free Response</h2>
+            <hr>
+            <!-- Free response question here -->
+            <h3>What is the currency of Estonia?</h3>
+            <div id="free-output" class="output"></div>
+            <div id="answer-container"><label for="answer">Answer:</label><input id="answer" type="text"
+                    name="answer" /></div>
+            <button id="confirm">Confirm</button>
+        </div>
+    </div>
+</body>
+
+</html>

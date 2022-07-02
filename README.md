@@ -672,3 +672,27 @@ Requirements:
 
 ## Week 8 - HTML, CSS, JavaScript
 
+### Lab 8
+
+[Lab 8: Trivia - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/8/)
+
+Requirements:
+* Part 1
+    * use h3 heading for question text
+    * button for each possible answer choices
+        * at least 3
+        * 1 correct
+    * add JS logic
+        * clicked on incorrect answer, button should turn red and display text beneath the question “Incorrect”
+        * clicked on the correct answer, button should turn green and display text beneath the question“Correct!”
+* Part 2
+    * add part 2 question for text-based answer
+        * use h3 heading for question
+        * input field for user response
+        * button to confirm their answer
+    * add JS logic that validates user answer after confirmation
+        * the text field should turn red, and display text beneath the question “Incorrect”
+        * the text field should turn green and display text beneath the question “Correct!”
+* Additionally you can
+    * Edit styles.css
+    * Add additional trivia questions
