@@ -696,3 +696,8 @@ Requirements:
 * Additionally you can
     * Edit styles.css
     * Add additional trivia questions
+
+### Problem set 8
+
+Requirements:
+* Contain at least four different .html pages
