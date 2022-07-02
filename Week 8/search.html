@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <title>Search</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <ul class="nav m-3">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="https://about.google/">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="https://store.google.com/">Store</a>
+                </li>
+                <li class="ms-auto nav-item">
+                    <a class="nav-link text-dark" href="https://www.google.com/gmail/">Gmail</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="https://images.google.com/">Images</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary" role="button" href="https://accounts.google.com/ServiceLogin">Sign In</a>
+                </li>
+            </ul>
+            <div class="text-center">
+
+            <form method="get" action="https://www.google.com/search" class="mt-4">
+                <input class="form-control form-control-lg mb-4 mx-auto w-50" name="q" type="text" autocomplete="off" placeholder="Query" autofocus>
+                <button class="btn btn-light" type="submit">Search</button>
+                <button class="btn btn-light" name="btnI" type="submit">Feeling lucky</button>
+            </form>
+            </div>
+        </div>
+    </body>
+</html>

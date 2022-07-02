@@ -669,3 +669,6 @@ Requirements:
 - Add answers to answers.txt file by filling in the blanks
 
 - Recent theft took place in Humphrey Street, on 28th July
+
+## Week 8 - HTML, CSS, JavaScript
+
