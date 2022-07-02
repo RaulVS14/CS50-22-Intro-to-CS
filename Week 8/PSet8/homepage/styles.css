@@ -1,0 +1,66 @@
+:root {
+    --primary-color: #F0F0C9;
+    --accent-primary-color: #124E78;
+    --accent-secondary-color: #D74E09;
+    --accent-tertiary-color: #6E0E0A;
+    --hover-text-color: #F2BB05;
+}
+
+html, body {
+    height: 100vh;
+    color: var(--accent-primary-color);
+
+}
+
+header {
+    background-color: var(--accent-primary-color);
+    color: var(--primary-color);
+}
+
+header .nav-link, header .navbar-light .navbar-brand, header .navbar-light .navbar-toggler {
+    color: var(--primary-color);
+}
+
+header .nav-link:hover, header .navbar-light .navbar-brand:hover, header .navbar-light .navbar-toggler:hover {
+    color: var(--hover-text-color);
+}
+
+header .nav-link:active, header .navbar-light .navbar-brand:active, header .navbar-light .navbar-toggler:active {
+    color: var(--accent-secondary-color);
+}
+
+header .nav-link:focus, header .navbar-light .navbar-brand:focus, header .navbar-light .navbar-toggler:focus {
+    color: var(--accent-secondary-color);
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--primary-color);
+    color: var(--accent-primary-color);
+}
+
+.text-brand-secondary {
+    color: var(--accent-secondary-color);
+}
+
+.cta {
+    background-color: var(--accent-tertiary-color);
+    color: white;
+    display: inline-block;
+}
+.cta:hover{
+    background-color: var(--accent-secondary-color);
+    color: white;
+}
+
+main {
+    background-color: var(--primary-color);
+}
+#copy{
+    justify-self: flex-end;
+    text-align: center;
+    display: block;
+    margin-top: 1.5em;
+}
+footer{
+    background-color: var(--accent-secondary-color);
+}

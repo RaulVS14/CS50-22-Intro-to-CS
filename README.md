@@ -699,5 +699,25 @@ Requirements:
 
 ### Problem set 8
 
+#### Homepage
+
 Requirements:
-* Contain at least four different .html pages
+* Contain at least four different `.html` pages
+  * one of which is `index.html`
+  * it should be possible to get from any page on your website to any other page by following one or more hyperlinks
+* Use at least ten (10) distinct HTML tags besides <html>, <head>, <body>, and <title>
+* Integrate one or more features from Bootstrap into your site
+  * ```<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">```
+  * ```<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>```
+* Have at least one stylesheet file of your own creation, `styles.css`
+  * Which uses at least five different CSS selectors
+    * e.g. tag, class or ID
+    * within which you use a total of at least five different CSS properties
+      * font-size, margin etc
+* Integrate one or more features of JavaScript into your site to make your site more interactive.
+  * you can use JavaScript to add alerts, to have an effect at a recurring interval, or to add interactivity to buttons, dropdowns, or forms. Feel free to be creative!
+* Ensure that your site looks nice on browsers both on mobile devices as well as laptops and desktops.
+* Consider also:
+  * whether the aesthetics of your site are such that it is intuitive and straightforward for a user to navigate;
+  * whether your CSS has been factored out into a separate CSS file(s); 
+  * whether you have avoided repetition and redundancy by “cascading” style properties from parent tags.
