@@ -11,6 +11,9 @@ html, body {
     color: var(--accent-primary-color);
 
 }
+.bg-accent-primary{
+    background-color: var(--accent-primary-color);
+}
 
 header {
     background-color: var(--accent-primary-color);
