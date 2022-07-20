@@ -47,7 +47,8 @@ header .nav-link:focus, header .navbar-light .navbar-brand:focus, header .navbar
     color: white;
     display: inline-block;
 }
-.cta:hover{
+
+.cta:hover {
     background-color: var(--accent-secondary-color);
     color: white;
 }
@@ -55,12 +56,14 @@ header .nav-link:focus, header .navbar-light .navbar-brand:focus, header .navbar
 main {
     background-color: var(--primary-color);
 }
-#copy{
+
+#copy {
     justify-self: flex-end;
     text-align: center;
     display: block;
     margin-top: 1.5em;
 }
-footer{
+
+footer {
     background-color: var(--accent-secondary-color);
 }
