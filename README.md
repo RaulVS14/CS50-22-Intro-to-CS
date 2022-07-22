@@ -721,3 +721,23 @@ Requirements:
   * whether the aesthetics of your site are such that it is intuitive and straightforward for a user to navigate;
   * whether your CSS has been factored out into a separate CSS file(s); 
   * whether you have avoided repetition and redundancy by “cascading” style properties from parent tags.
+
+## Week 9 - Flask
+
+### Lab 8
+
+[Lab 9: Birthdays - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/9/)
+
+Requirements:
+* Route `/` with `GET` should display:
+  * List of all the people, along with their birthdays in a table
+    * In `app.py` add logic to handle `GET` request to query `birthdays.db` for all birthdays.  Pass all of that data to your `index.html` template
+    * In `index.html` add logic to render each birthday.
+* Route `/` with `POST` should add:
+  * New birthday to `birthdays.db` database and re-render `index.html`
+    * In `index.html`, add an HTML form. It should let user type in a name, a birthday month, and birthday day.
+      * Submit to action `/`
+    * In `app.py`, add logic to handle for `POST` request and inserting a new row to `birthdays.db`
+* Optionally:
+  * Add ability to delete and/or edit birthdays
+  * Additional feature of your choosing
