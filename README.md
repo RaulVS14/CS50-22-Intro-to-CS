@@ -677,22 +677,27 @@ Requirements:
 [Lab 8: Trivia - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/8/)
 
 Requirements:
+
 * Part 1
     * use h3 heading for question text
     * button for each possible answer choices
         * at least 3
         * 1 correct
     * add JS logic
-        * clicked on incorrect answer, button should turn red and display text beneath the question “Incorrect”
-        * clicked on the correct answer, button should turn green and display text beneath the question“Correct!”
+        * clicked on incorrect answer, button should turn red and display text
+          beneath the question “Incorrect”
+        * clicked on the correct answer, button should turn green and display
+          text beneath the question“Correct!”
 * Part 2
     * add part 2 question for text-based answer
         * use h3 heading for question
         * input field for user response
         * button to confirm their answer
     * add JS logic that validates user answer after confirmation
-        * the text field should turn red, and display text beneath the question “Incorrect”
-        * the text field should turn green and display text beneath the question “Correct!”
+        * the text field should turn red, and display text beneath the question
+          “Incorrect”
+        * the text field should turn green and display text beneath the question
+          “Correct!”
 * Additionally you can
     * Edit styles.css
     * Add additional trivia questions
@@ -702,25 +707,34 @@ Requirements:
 #### Homepage
 
 Requirements:
+
 * Contain at least four different `.html` pages
-  * one of which is `index.html`
-  * it should be possible to get from any page on your website to any other page by following one or more hyperlinks
-* Use at least ten (10) distinct HTML tags besides <html>, <head>, <body>, and <title>
+    * one of which is `index.html`
+    * it should be possible to get from any page on your website to any other
+      page by following one or more hyperlinks
+* Use at least ten (10) distinct HTML tags besides <html>, <head>, <body>,
+  and <title>
 * Integrate one or more features from Bootstrap into your site
-  * ```<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">```
-  * ```<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>```
+    * ```<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">```
+    * ```<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>```
 * Have at least one stylesheet file of your own creation, `styles.css`
-  * Which uses at least five different CSS selectors
-    * e.g. tag, class or ID
-    * within which you use a total of at least five different CSS properties
-      * font-size, margin etc
-* Integrate one or more features of JavaScript into your site to make your site more interactive.
-  * you can use JavaScript to add alerts, to have an effect at a recurring interval, or to add interactivity to buttons, dropdowns, or forms. Feel free to be creative!
-* Ensure that your site looks nice on browsers both on mobile devices as well as laptops and desktops.
+    * Which uses at least five different CSS selectors
+        * e.g. tag, class or ID
+        * within which you use a total of at least five different CSS properties
+            * font-size, margin etc
+* Integrate one or more features of JavaScript into your site to make your site
+  more interactive.
+    * you can use JavaScript to add alerts, to have an effect at a recurring
+      interval, or to add interactivity to buttons, dropdowns, or forms. Feel
+      free to be creative!
+* Ensure that your site looks nice on browsers both on mobile devices as well as
+  laptops and desktops.
 * Consider also:
-  * whether the aesthetics of your site are such that it is intuitive and straightforward for a user to navigate;
-  * whether your CSS has been factored out into a separate CSS file(s); 
-  * whether you have avoided repetition and redundancy by “cascading” style properties from parent tags.
+    * whether the aesthetics of your site are such that it is intuitive and
+      straightforward for a user to navigate;
+    * whether your CSS has been factored out into a separate CSS file(s);
+    * whether you have avoided repetition and redundancy by “cascading” style
+      properties from parent tags.
 
 ## Week 9 - Flask
 
@@ -729,15 +743,112 @@ Requirements:
 [Lab 9: Birthdays - CS50x 2022](https://cs50.harvard.edu/x/2022/labs/9/)
 
 Requirements:
+
 * Route `/` with `GET` should display:
-  * List of all the people, along with their birthdays in a table
-    * In `app.py` add logic to handle `GET` request to query `birthdays.db` for all birthdays.  Pass all of that data to your `index.html` template
-    * In `index.html` add logic to render each birthday.
+    * List of all the people, along with their birthdays in a table
+        * In `app.py` add logic to handle `GET` request to query `birthdays.db`
+          for all birthdays. Pass all of that data to your `index.html` template
+        * In `index.html` add logic to render each birthday.
 * Route `/` with `POST` should add:
-  * New birthday to `birthdays.db` database and re-render `index.html`
-    * In `index.html`, add an HTML form. It should let user type in a name, a birthday month, and birthday day.
-      * Submit to action `/`
-    * In `app.py`, add logic to handle for `POST` request and inserting a new row to `birthdays.db`
+    * New birthday to `birthdays.db` database and re-render `index.html`
+        * In `index.html`, add an HTML form. It should let user type in a name,
+          a birthday month, and birthday day.
+            * Submit to action `/`
+        * In `app.py`, add logic to handle for `POST` request and inserting a
+          new row to `birthdays.db`
 * Optionally:
-  * Add ability to delete and/or edit birthdays
-  * Additional feature of your choosing
+    * Add ability to delete and/or edit birthdays
+    * Additional feature of your choosing
+
+### Problem set 9
+
+#### Finance
+
+[C$50 Finance - CS50x 2022](https://cs50.harvard.edu/x/2022/psets/9/finance/)
+
+##### Configuration
+
+1. Visit [iexcloud.io/cloud-login#/register/](https://iexcloud.io/cloud-login#/register/)
+2. Select the “Individual” account type, then enter your name, email address,
+   and a password, and click “Create account”.
+3. Once registered, scroll down to “Get started for free” and click “Select
+   Start plan” to choose the free plan.
+4. Once you’ve confirmed your account via a confirmation email,
+   visit [Tokens](https://iexcloud.io/console/tokens)
+5. Copy the key that appears under the Token column (it should begin with pk_).
+6. In your terminal window, execute:
+   ```
+   $ export API_KEY=value
+   ```
+
+##### Requirements
+
+* implement `register`
+  * allows a user to register for account via form
+  * require username, input name=`username`
+    * render an apology if the user’s input is blank or exists
+  * require password, input name=`password`
+  * require same password, input name=`confirmation`
+  * submit via `POST` to `/register`
+  * insert user into `users`
+    * store hash of user’s password
+      * use `generate_password_hash`
+  * create new template for registration
+* implement `quote`
+  * require input stock’s symbol, input name=`symbol`
+  * submit via `POST` to `/quote`
+  * when users visit `/quote` via `GET`
+    * render form that submits to `/quote` via `POST`
+    * then render results from `lookup`
+* implement `buy`
+  * require input stock’s symbol, input name=`symbol`
+      * render an apology if
+          * input is blank
+          * symbol does not exist `lookup`
+  * require input number of shares, input name=`shares`
+      * render an apology if
+          * input is not a positive integer
+  * submit via `POST` to `/buy`
+  * `SELECT` to find how much cash user has
+  * Add one or more tables to `finance.db` to keep track purchases
+    * Use appropriate SQLite types
+    * Define `UNIQUE` indexes on any fields that should be unique
+    * Define (non-UNIQUE) indexes on any fields via which you will search
+      * (as via SELECT with WHERE)
+  * render an apology if
+    * user cannot afford the number of shares at the current price.
+  * You don’t need to worry about race conditions
+* implement `index`
+  * renders table summarizing
+    * stocks owned
+    * number of shares owned
+    * current price
+    * total value - shares * price
+  * show current cash balance with grand total - stocks total value + cash
+  * need to execute multiple SELECTs
+* implement `sell`
+  * require input stock’s symbol, input name=`symbol`
+    * render an apology if
+      * user fails to select a stock
+      * user does not own any shares of that stock
+  * require input number of shares, input name=`shares`
+      * render an apology if
+          * input is not a positive integer
+          * user does not own that many shares of the stock
+  * submit via `POST` to `/sell`
+  * don't need to worry about race conditions
+* implement `history`
+  * render table of all transactions - every buy and sell
+    * type of transaction
+    * stock's symbol
+    * price
+    * number of shares
+    * date and time
+    * might alter `buy` table or create additional table. Minimize redundancies
+* personal touch (**implement at least one**)
+  * Allow users to change their passwords
+  * Allow users to add additional cash to their account
+  * Allow users to buy more shares or sell shares of stocks they already own via `index` itself, without having to type stock’s symbols manually
+  * Require users’ passwords to have some number of letters, numbers, and/or symbols
+  * implement some other feature of comparable scope
+
