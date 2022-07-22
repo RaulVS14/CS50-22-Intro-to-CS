@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block content %}
+<form method="POST" action="/greet">
+    <label for="name">Enter: </label>
+    <input id="name" autocomplete="off" autofocus name="name" placeholder="name" type="text"/>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

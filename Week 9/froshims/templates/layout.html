@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    {% if session["name"] %}
+        You are logged in as {{session["name"]}}. <a href="/logout">Log out</a>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>
