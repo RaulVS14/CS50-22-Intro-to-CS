@@ -4,7 +4,7 @@ from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash, safe_str_cmp
 
 from helpers import apology, login_required, lookup, usd
 
@@ -20,6 +20,7 @@ app.jinja_env.filters["usd"] = usd
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_FILE_DIR"] = "app_session"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
@@ -79,10 +80,12 @@ def login():
             return apology("must provide password", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = db.execute("SELECT * FROM users WHERE username = ?",
+                          request.form.get("username"))
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if len(rows) != 1 or not check_password_hash(
+                rows[0]["hash"], request.form.get("password")):
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
@@ -117,7 +120,32 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    return apology("TODO")
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+        # Ensure username was submitted
+        if not username:
+            return apology("must provide username", 400)
+        else:
+            rows = db.execute("SELECT * FROM users where username = ?", username)
+            if len(rows) == 1:
+                return apology("username already exists", 403)
+        # Ensure password was submitted
+        if not password:
+            return apology("must provide password", 400)
+        # Ensure confirmation was submitted
+        if not confirmation:
+            return apology("must confirm password", 400) \
+                # Ensure passwords match
+        if password and confirmation and not safe_str_cmp(password, confirmation):
+            return apology("passwords must match", 400)
+
+        db.execute("INSERT INTO users (username, hash, cash) VALUES (?, ?, 0)", username, generate_password_hash(password))
+        # Redirect user to home page
+        return redirect("/login")
+    else:
+        return render_template("register.html")
 
 
 @app.route("/sell", methods=["GET", "POST"])
