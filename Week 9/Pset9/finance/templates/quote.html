@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote {% if symbol %}
+    {{ symbol }}
+{% endif %}
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="symbol" name="symbol" placeholder="Symbol" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Get quote</button>
+    </form>
+    {% if data %}
+        <div class="row mt-5 justify-content-center align-item-center no-gutters">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+                <div class="card">
+                    <div class="card-header">{{ data.symbol }}</div>
+                    <div class="card-body">
+                        <p>{{ data.name }}</p>
+                        {{ data.price | usd }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
