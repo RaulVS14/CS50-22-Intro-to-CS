@@ -1,4 +1,6 @@
-cs50
+termcolor
+SQLAlchemy
+sqlparse
 Flask
 Flask-Session
 requests
