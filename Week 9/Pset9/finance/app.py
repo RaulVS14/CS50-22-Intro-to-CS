@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
@@ -47,11 +48,56 @@ def index():
     return apology("TODO")
 
 
+def is_valid_shares(shares):
+    if not shares:
+        return False
+    try:
+        int_shares = int(shares)
+        if 1 > int(int_shares):
+            return False
+    except ValueError as _:
+        return False
+    return True
+
+
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+    if request.method == "POST":
+        symbol = request.form.get("symbol")
+        shares = request.form.get("shares")
+        # Ensure symbol was submitted
+        if not symbol:
+            return apology("must provide symbol", 400)
+
+        # Ensure symbol was correct
+        stock = lookup(symbol)
+        if not stock:
+            return apology("must provide correct symbol")
+
+        # Ensure shares was correctly submitted
+        if not is_valid_shares(shares):
+            return apology("must provide positive integer", 400)
+
+        user_id = session.get('user_id')
+        rows = db.execute("SELECT * FROM users WHERE id = ?", user_id)
+        if stock and len(rows) == 1:
+            user_cash = rows[0]['cash']
+            total_cost = int(shares) * stock['price']
+            # user_id, symbol, name, price, shares, timestamp, total
+            if user_cash < total_cost:
+                return apology(f"not enough cash to buy {shares} for {stock['price']}")
+
+            db.execute(
+                "INSERT INTO purchases "
+                "(user_id, symbol, name, price, shares, total, timestamp) "
+                "VALUES (?, ?, ?, ?, ?, ?, datetime('now'))",
+                user_id, stock['symbol'], stock['name'], stock['price'], shares, total_cost)
+            flash(
+                f"Purchase successful! Bought {shares} shares of {stock['symbol']} for {usd(stock['price'])}. Total cost was ${usd(total_cost)}")
+            return render_template("buy.html")
+    return render_template("buy.html")
 
 
 @app.route("/history")
