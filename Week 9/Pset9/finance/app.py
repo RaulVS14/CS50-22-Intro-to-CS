@@ -120,7 +120,8 @@ def quote():
         if not symbol:
             return apology("must provide symbol", 400)
         data = lookup(symbol)
-        print(data)
+        if not data:
+            return apology("Symbol doesn't exist", 400)
         return render_template("quote.html", symbol=symbol, data=data)
     else:
         return render_template("quote.html")
