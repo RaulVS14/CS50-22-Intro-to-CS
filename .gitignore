@@ -3,3 +3,4 @@ CMakeLists.txt
 .idea/
 libcs50-10.1.1
 cmake-build-debug
+.env
