@@ -46,14 +46,17 @@ def after_request(response):
 def index():
     """Show portfolio of stocks"""
     user = session["user_id"]
+    # Retrieve user purchased stock amounts
     stocks = db.execute("SELECT symbol, name, SUM(shares) as shares FROM purchases WHERE user_id = ? GROUP BY symbol",
                         user)
+    # Retrieve user data to get user cash amount
     user_data = db.execute("SELECT id, cash FROM users WHERE id = ?", user)
     total = 0
     cash = 0
     if len(user_data) == 1 and stocks:
         cash = user_data[0]['cash']
         total += cash
+        # Loop over stocks to get share current price and shares total value
         for stock in stocks:
             stock_data = lookup(stock['symbol'])
             if stock_data:
@@ -101,15 +104,17 @@ def buy():
             user_cash = rows[0]['cash']
             total_cost = int(shares) * stock['price']
             # user_id, symbol, name, price, shares, timestamp, total
+            # Ensure user has enough cash
             if user_cash < total_cost:
                 return apology(f"not enough cash to buy {shares} for {stock['price']}")
-
-            db.execute("UPDATE users SET cash = ? WHERE id = ?", user_cash - total_cost, user_id)
+            # Register purchase to database
             db.execute(
                 "INSERT INTO purchases "
                 "(user_id, symbol, name, price, shares, total, timestamp) "
                 "VALUES (?, ?, ?, ?, ?, ?, datetime('now'))",
                 user_id, stock['symbol'], stock['name'], stock['price'], shares, total_cost)
+            # Update database with new cash amount
+            db.execute("UPDATE users SET cash = ? WHERE id = ?", user_cash - total_cost, user_id)
             flash(
                 f"Purchase successful! Bought {shares} shares of {stock['symbol']} for {usd(stock['price'])}. Total cost was {usd(total_cost)}")
             return redirect("/")
