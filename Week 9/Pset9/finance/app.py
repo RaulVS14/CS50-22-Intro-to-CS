@@ -45,7 +45,22 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    return apology("TODO")
+    user = session["user_id"]
+    stocks = db.execute("SELECT symbol, name, SUM(shares) as shares FROM purchases WHERE user_id = ? GROUP BY symbol",
+                        user)
+    user_data = db.execute("SELECT id, cash FROM users WHERE id = ?", user)
+    total = 0
+    cash = 0
+    if len(user_data) == 1 and stocks:
+        cash = user_data[0]['cash']
+        total += cash
+        for stock in stocks:
+            stock_data = lookup(stock['symbol'])
+            if stock_data:
+                stock['price'] = stock_data['price']
+                stock['total'] = stock['shares'] * stock_data['price']
+                total += stock['total']
+    return render_template("index.html", total=total, stocks=stocks, cash=cash)
 
 
 def is_valid_shares(shares):
@@ -89,14 +104,15 @@ def buy():
             if user_cash < total_cost:
                 return apology(f"not enough cash to buy {shares} for {stock['price']}")
 
+            db.execute("UPDATE users SET cash = ? WHERE id = ?", user_cash - total_cost, user_id)
             db.execute(
                 "INSERT INTO purchases "
                 "(user_id, symbol, name, price, shares, total, timestamp) "
                 "VALUES (?, ?, ?, ?, ?, ?, datetime('now'))",
                 user_id, stock['symbol'], stock['name'], stock['price'], shares, total_cost)
             flash(
-                f"Purchase successful! Bought {shares} shares of {stock['symbol']} for {usd(stock['price'])}. Total cost was ${usd(total_cost)}")
-            return render_template("buy.html")
+                f"Purchase successful! Bought {shares} shares of {stock['symbol']} for {usd(stock['price'])}. Total cost was {usd(total_cost)}")
+            return redirect("/")
     return render_template("buy.html")
 
 
