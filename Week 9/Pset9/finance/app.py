@@ -64,6 +64,41 @@ def index():
     return render_template("index.html", total=total, stocks=stocks, cash=cash)
 
 
+@app.route("/account", methods=["GET", "POST"])
+@login_required
+def account():
+    user_id = session["user_id"]
+    user = get_user(user_id, "id, cash, username, hash")
+    if request.method == "POST":
+        old_password = request.form.get("old_password")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+        # Ensure old password was provided
+        if not old_password:
+            return apology("must provide current password ", 403)
+
+        # Ensure new password was provided
+        if not new_password:
+            return apology("must provide new password ", 403)
+        # Ensure confirm password was provided
+        if not confirm_password:
+            return apology("must confirm new password ", 403)
+
+        # Ensure user has confirmed with existing password
+        if user and not check_password_hash(user["hash"], old_password):
+            return apology("incorrect current password")
+
+        # Ensure new passwords match
+        if not safe_str_cmp(new_password, confirm_password):
+            return apology("passwords didn't match")
+
+
+        result = db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(new_password), user_id)
+        if result:
+            flash("Password updated")
+    return render_template("account.html", user=user)
+
+
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
@@ -85,7 +120,7 @@ def buy():
             return apology("must provide positive integer", 400)
         shares = int(shares)
         user_id = session.get('user_id')
-        user = get_user(user_id)
+        user = get_user(user_id, "id, cash")
         if stock and user:
             total_cost = shares * stock['price']
             # Ensure user has enough cash
@@ -216,7 +251,7 @@ def register():
 def sell():
     """Sell shares of stock"""
     user_id = session.get('user_id')
-    user = get_user(user_id)
+    user = get_user(user_id, "id, cash")
     owned_stocks = db.execute(
         "SELECT symbol, name, shares FROM owned_shares WHERE user_id = ?", user_id)
     if request.method == "POST":
@@ -291,8 +326,8 @@ def handle_owned_stock(user_id, symbol, name, shares):
         return False
 
 
-def get_user(user_id):
-    user_data = db.execute("SELECT id, cash FROM users WHERE id = ?", user_id)
+def get_user(user_id, fields):
+    user_data = db.execute(f"SELECT {fields} FROM users WHERE id = ?", user_id)
     if len(user_data) == 1:
         return user_data[0]
     return False
