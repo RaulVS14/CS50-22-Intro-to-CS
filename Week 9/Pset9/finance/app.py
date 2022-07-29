@@ -94,13 +94,12 @@ def buy():
             # Update owned_stock table
             handle_owned_stock(user_id, stock["symbol"], stock["name"], shares)
             # Register purchase to transaction table
-            transaction = Transaction(user_id, stock["symbol"], stock["name"], stock["price"], shares, total_cost,
-                                      "buy")
+            transaction = Transaction(user_id, stock["symbol"], stock["price"], shares, "buy")
             insert_transaction(transaction)
             # Update database with new cash amount
             update_cash(user_id, user['cash'] - total_cost)
             flash(
-                f"Purchase successful! Bought {shares} shares of {stock['symbol']} for {usd(stock['price'])}. Total cost was {usd(total_cost)}")
+                f"Transaction successful! Bought {shares} shares of {stock['symbol']} for {usd(stock['price'])}. Total cost was {usd(total_cost)}")
             return redirect("/")
     return render_template("buy.html")
 
@@ -109,7 +108,9 @@ def buy():
 @login_required
 def history():
     """Show history of transactions"""
-    return apology("TODO")
+    user_id = session["user_id"]
+    transactions = db.execute("SELECT * FROM transactions WHERE user_id = ? ORDER BY timestamp DESC", user_id)
+    return render_template("history.html", transactions=transactions)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -243,11 +244,13 @@ def sell():
         # Update owned_stock table
         handle_owned_stock(user_id, matching_stock["symbol"], matching_stock["name"], -shares)
         # Add transaction to database
-        transaction = Transaction(user_id, matching_stock["symbol"], matching_stock["name"], current_stock["price"],
-                                  shares, total_price, "sell")
+        transaction = Transaction(user_id, matching_stock["symbol"], current_stock["price"], shares, "sell")
         insert_transaction(transaction)
         # Update user cash
         update_cash(user_id, user["cash"] + total_price)
+        flash(
+            f"Transaction successful! Sold {shares} shares of {matching_stock['symbol']} for {usd(current_stock['price'])}. Total earned was {usd(total_price)}")
+        return redirect("/")
     return render_template("sell.html", stocks=owned_stocks)
 
 
@@ -267,10 +270,8 @@ def is_valid_shares(shares):
 class Transaction:
     user_id: str
     symbol: str
-    name: str
     price: float
     shares: int
-    total: float
     type: str
 
     def __getitem__(self, item):
@@ -281,7 +282,8 @@ def handle_owned_stock(user_id, symbol, name, shares):
     rows = db.execute("SELECT * FROM owned_shares WHERE user_id = ? AND symbol = ?", user_id, symbol)
     if len(rows) == 1:
         existing_stock = rows[0]
-        return db.execute("UPDATE owned_shares SET shares = ? WHERE user_id = ? AND symbol = ?", existing_stock["shares"] + shares, user_id, symbol)
+        return db.execute("UPDATE owned_shares SET shares = ? WHERE user_id = ? AND symbol = ?",
+                          existing_stock["shares"] + shares, user_id, symbol)
     elif len(rows) == 0 and shares > 0:
         return db.execute("INSERT INTO owned_shares (user_id, symbol, name, shares) VALUES (?, ?, ?, ?)", user_id,
                           symbol, name, shares)
@@ -303,12 +305,10 @@ def update_cash(user_id, amount):
 def insert_transaction(transaction: Transaction):
     return db.execute(
         "INSERT INTO transactions "
-        "(user_id, symbol, name, price, shares, total, type, timestamp) "
-        "VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'));",
+        "(user_id, symbol, price, shares, type, timestamp) "
+        "VALUES (?, ?, ?, ?, ?, datetime('now'));",
         transaction["user_id"],
         transaction["symbol"],
-        transaction["name"],
         transaction["price"],
         transaction["shares"],
-        transaction["total"],
         transaction["type"])

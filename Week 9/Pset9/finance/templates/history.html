@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    {% if transactions %}
+        <table class="table table-striped table-hover" aria-describedby="Listing of user transactions - buy and sell">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col" class="text-start">Type</th>
+                <th scope="col" class="text-start">Symbol</th>
+                <th scope="col" class="text-end">Price</th>
+                <th scope="col" class="text-end">Shares</th>
+                <th scope="col" class="text-end">Date and time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <td class="text-start {% if transaction.type =='sell'%}text-danger{% else %}text-success{% endif %}">
+                        {{ transaction.type | upper }}
+                    </td>
+                    <td class="text-start">
+                        {{ transaction.symbol }}
+                    </td>
+                    <td class="text-end">
+                        {{ transaction.price|usd }}
+                    </td>
+                    <td class="text-end">
+                        {{ transaction.shares }}
+                    </td>
+                    <td class="text-end">
+                        {{ transaction.timestamp }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        No transactions
+    {% endif %}
+{% endblock %}
