@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
-from werkzeug.security import check_password_hash, generate_password_hash, safe_str_cmp
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import apology, login_required, lookup, usd
 
@@ -47,7 +47,7 @@ def index():
     """Show portfolio of stocks"""
     user = session["user_id"]
     # Retrieve user owned stock amounts
-    stocks = db.execute("SELECT symbol, name, shares FROM owned_shares WHERE user_id = ?", user)
+    stocks = db.execute("SELECT symbol, name, shares FROM user_shares WHERE user_id = ?", user)
     # Retrieve user data to get user cash amount
     user_data = db.execute("SELECT id, cash FROM users WHERE id = ?", user)
     total = 0
@@ -90,7 +90,7 @@ def account():
             return apology("incorrect current password")
 
         # Ensure new passwords match
-        if not safe_str_cmp(new_password, confirm_password):
+        if new_password != confirm_password:
             return apology("passwords didn't match")
 
         if not validate_password_pattern(new_password):
@@ -256,14 +256,16 @@ def register():
         if not confirmation:
             return apology("must confirm password", 400)
         # Ensure passwords match
-        if password and confirmation and not safe_str_cmp(password, confirmation):
+        if password and confirmation and (password != confirmation):
             return apology("passwords must match", 400)
         if not validate_password_pattern(password):
             return apology("Must consist of 8-16 characters of letters, numbers and symbols")
-        db.execute("INSERT INTO users (username, hash, cash) VALUES (?, ?, 0)", username,
+        key = db.execute("INSERT INTO users (username, hash, cash) VALUES (?, ?, 0)", username,
                    generate_password_hash(password))
+        if key:
+            session["user_id"] = key
         # Redirect user to home page
-        return redirect("/login")
+        return redirect("/")
     else:
         return render_template("register.html")
 
@@ -275,7 +277,7 @@ def sell():
     user_id = session.get('user_id')
     user = get_user(user_id)
     owned_stocks = db.execute(
-        "SELECT symbol, name, shares FROM owned_shares WHERE user_id = ?", user_id)
+        "SELECT symbol, name, shares FROM user_shares WHERE user_id = ?", user_id)
     if request.method == "POST":
         symbol = request.form.get("symbol")
         # Ensure symbol was provided
@@ -336,13 +338,13 @@ class Transaction:
 
 
 def handle_owned_stock(user_id, symbol, name, shares):
-    rows = db.execute("SELECT * FROM owned_shares WHERE user_id = ? AND symbol = ?", user_id, symbol)
+    rows = db.execute("SELECT * FROM user_shares WHERE user_id = ? AND symbol = ?", user_id, symbol)
     if len(rows) == 1:
         existing_stock = rows[0]
-        return db.execute("UPDATE owned_shares SET shares = ? WHERE user_id = ? AND symbol = ?",
+        return db.execute("UPDATE user_shares SET shares = ? WHERE user_id = ? AND symbol = ?",
                           existing_stock["shares"] + shares, user_id, symbol)
     elif len(rows) == 0 and shares > 0:
-        return db.execute("INSERT INTO owned_shares (user_id, symbol, name, shares) VALUES (?, ?, ?, ?)", user_id,
+        return db.execute("INSERT INTO user_shares (user_id, symbol, name, shares) VALUES (?, ?, ?, ?)", user_id,
                           symbol, name, shares)
     else:
         return False
