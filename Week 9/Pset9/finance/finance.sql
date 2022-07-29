@@ -1,4 +1,4 @@
-CREATE TABLE purchases
+CREATE TABLE transactions
 (
     id        INTEGER PRIMARY KEY,
     user_id   INTEGER,
@@ -7,19 +7,18 @@ CREATE TABLE purchases
     price     REAL    NOT NULL,
     shares    INTEGER NOT NULL,
     total     REAL    NOT NULL,
+    type      TEXT    NOT NULL,
     timestamp TEXT    NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
-CREATE TABLE sales
+
+CREATE TABLE owned_shares
 (
-    id        INTEGER PRIMARY KEY,
-    user_id   INTEGER,
-    symbol    TEXT    NOT NULL,
-    name      TEXT    NOT NULL,
-    price     REAL    NOT NULL,
-    shares    INTEGER NOT NULL,
-    total     REAL    NOT NULL,
-    timestamp TEXT    NOT NULL,
+    id      INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    symbol  TEXT    NOT NULL UNIQUE,
+    name    TEXT    NOT NULL,
+    shares  INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 

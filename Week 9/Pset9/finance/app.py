@@ -1,10 +1,9 @@
 import os
-from datetime import datetime
+from dataclasses import dataclass
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
-from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash, safe_str_cmp
 
 from helpers import apology, login_required, lookup, usd
@@ -46,9 +45,8 @@ def after_request(response):
 def index():
     """Show portfolio of stocks"""
     user = session["user_id"]
-    # Retrieve user purchased stock amounts
-    stocks = db.execute("SELECT symbol, name, SUM(shares) as shares FROM purchases WHERE user_id = ? GROUP BY symbol",
-                        user)
+    # Retrieve user owned stock amounts
+    stocks = db.execute("SELECT symbol, name, shares FROM owned_shares WHERE user_id = ?", user)
     # Retrieve user data to get user cash amount
     user_data = db.execute("SELECT id, cash FROM users WHERE id = ?", user)
     total = 0
@@ -64,18 +62,6 @@ def index():
                 stock['total'] = stock['shares'] * stock_data['price']
                 total += stock['total']
     return render_template("index.html", total=total, stocks=stocks, cash=cash)
-
-
-def is_valid_shares(shares):
-    if not shares:
-        return False
-    try:
-        int_shares = int(shares)
-        if 1 > int(int_shares):
-            return False
-    except ValueError as _:
-        return False
-    return True
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -97,24 +83,22 @@ def buy():
         # Ensure shares was correctly submitted
         if not is_valid_shares(shares):
             return apology("must provide positive integer", 400)
-
+        shares = int(shares)
         user_id = session.get('user_id')
-        rows = db.execute("SELECT * FROM users WHERE id = ?", user_id)
-        if stock and len(rows) == 1:
-            user_cash = rows[0]['cash']
-            total_cost = int(shares) * stock['price']
-            # user_id, symbol, name, price, shares, timestamp, total
+        user = get_user(user_id)
+        if stock and user:
+            total_cost = shares * stock['price']
             # Ensure user has enough cash
-            if user_cash < total_cost:
-                return apology(f"not enough cash to buy {shares} for {stock['price']}")
-            # Register purchase to database
-            db.execute(
-                "INSERT INTO purchases "
-                "(user_id, symbol, name, price, shares, total, timestamp) "
-                "VALUES (?, ?, ?, ?, ?, ?, datetime('now'))",
-                user_id, stock['symbol'], stock['name'], stock['price'], shares, total_cost)
+            if user['cash'] < total_cost:
+                return apology(f"not enough cash to buy {shares} for {usd(stock['price'])}")
+            # Update owned_stock table
+            handle_owned_stock(user_id, stock["symbol"], stock["name"], shares)
+            # Register purchase to transaction table
+            transaction = Transaction(user_id, stock["symbol"], stock["name"], stock["price"], shares, total_cost,
+                                      "buy")
+            insert_transaction(transaction)
             # Update database with new cash amount
-            db.execute("UPDATE users SET cash = ? WHERE id = ?", user_cash - total_cost, user_id)
+            update_cash(user_id, user['cash'] - total_cost)
             flash(
                 f"Purchase successful! Bought {shares} shares of {stock['symbol']} for {usd(stock['price'])}. Total cost was {usd(total_cost)}")
             return redirect("/")
@@ -231,8 +215,9 @@ def register():
 def sell():
     """Sell shares of stock"""
     user_id = session.get('user_id')
+    user = get_user(user_id)
     owned_stocks = db.execute(
-        "SELECT symbol, name, SUM(shares) as shares FROM purchases WHERE user_id = ? GROUP BY symbol", user_id)
+        "SELECT symbol, name, shares FROM owned_shares WHERE user_id = ?", user_id)
     if request.method == "POST":
         symbol = request.form.get("symbol")
         # Ensure symbol was provided
@@ -254,9 +239,76 @@ def sell():
         if shares and shares > matching_stock["shares"]:
             return apology("you don't own enough shares of that stock")
         current_stock = lookup(symbol)
-        db.execute("INSERT INTO sales "
-                   "(user_id, symbol, name, price, shares, total, timestamp) "
-                   "VALUES (?, ?, ?, ?, ?, ?, datetime('now'))",
-                   user_id, matching_stock["symbol"], matching_stock["name"], current_stock["price"], shares,
-                   current_stock["price"] * shares)
+        total_price = current_stock["price"] * shares
+        # Update owned_stock table
+        handle_owned_stock(user_id, matching_stock["symbol"], matching_stock["name"], -shares)
+        # Add transaction to database
+        transaction = Transaction(user_id, matching_stock["symbol"], matching_stock["name"], current_stock["price"],
+                                  shares, total_price, "sell")
+        insert_transaction(transaction)
+        # Update user cash
+        update_cash(user_id, user["cash"] + total_price)
     return render_template("sell.html", stocks=owned_stocks)
+
+
+def is_valid_shares(shares):
+    if not shares:
+        return False
+    try:
+        int_shares = int(shares)
+        if 1 > int(int_shares):
+            return False
+    except ValueError as _:
+        return False
+    return True
+
+
+@dataclass
+class Transaction:
+    user_id: str
+    symbol: str
+    name: str
+    price: float
+    shares: int
+    total: float
+    type: str
+
+    def __getitem__(self, item):
+        return getattr(self, item)
+
+
+def handle_owned_stock(user_id, symbol, name, shares):
+    rows = db.execute("SELECT * FROM owned_shares WHERE user_id = ? AND symbol = ?", user_id, symbol)
+    if len(rows) == 1:
+        existing_stock = rows[0]
+        return db.execute("UPDATE owned_shares SET shares = ? WHERE user_id = ? AND symbol = ?", existing_stock["shares"] + shares, user_id, symbol)
+    elif len(rows) == 0 and shares > 0:
+        return db.execute("INSERT INTO owned_shares (user_id, symbol, name, shares) VALUES (?, ?, ?, ?)", user_id,
+                          symbol, name, shares)
+    else:
+        return False
+
+
+def get_user(user_id):
+    user_data = db.execute("SELECT id, cash FROM users WHERE id = ?", user_id)
+    if len(user_data) == 1:
+        return user_data[0]
+    return False
+
+
+def update_cash(user_id, amount):
+    return db.execute("UPDATE users SET cash = ? WHERE id = ?", amount, user_id)
+
+
+def insert_transaction(transaction: Transaction):
+    return db.execute(
+        "INSERT INTO transactions "
+        "(user_id, symbol, name, price, shares, total, type, timestamp) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'));",
+        transaction["user_id"],
+        transaction["symbol"],
+        transaction["name"],
+        transaction["price"],
+        transaction["shares"],
+        transaction["total"],
+        transaction["type"])
