@@ -10,11 +10,14 @@
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" aria-describedby="passwordHelpText">
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirm password" type="password">
+            <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirm password" type="password" aria-describedby="passwordHelpText">
         </div>
+        <p id="passwordHelpText" class="form-text">
+            Must consist of 8-16 characters of letters, numbers and symbols
+        </p>
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
 {% endblock %}

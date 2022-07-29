@@ -1,4 +1,5 @@
 import os
+import re
 from dataclasses import dataclass
 
 from cs50 import SQL
@@ -92,6 +93,8 @@ def account():
         if not safe_str_cmp(new_password, confirm_password):
             return apology("passwords didn't match")
 
+        if not validate_password_pattern(new_password):
+            return apology("Must consist of 8-16 characters of letters, numbers and symbols")
         result = db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(new_password), user_id)
         if result:
             flash("Password updated")
@@ -119,6 +122,7 @@ def add_amount():
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
+    user_symbol = request.args.get("symbol", "")
     """Buy shares of stock"""
     if request.method == "POST":
         symbol = request.form.get("symbol")
@@ -153,7 +157,7 @@ def buy():
             flash(
                 f"Transaction successful! Bought {shares} shares of {stock['symbol']} for {usd(stock['price'])}. Total cost was {usd(total_cost)}")
             return redirect("/")
-    return render_template("buy.html")
+    return render_template("buy.html", symbol=user_symbol)
 
 
 @app.route("/history")
@@ -250,11 +254,12 @@ def register():
             return apology("must provide password", 400)
         # Ensure confirmation was submitted
         if not confirmation:
-            return apology("must confirm password", 400) \
-                # Ensure passwords match
+            return apology("must confirm password", 400)
+        # Ensure passwords match
         if password and confirmation and not safe_str_cmp(password, confirmation):
             return apology("passwords must match", 400)
-
+        if not validate_password_pattern(password):
+            return apology("Must consist of 8-16 characters of letters, numbers and symbols")
         db.execute("INSERT INTO users (username, hash, cash) VALUES (?, ?, 0)", username,
                    generate_password_hash(password))
         # Redirect user to home page
@@ -366,3 +371,6 @@ def insert_transaction(transaction: Transaction):
         transaction["price"],
         transaction["shares"],
         transaction["type"])
+
+def validate_password_pattern(password):
+    return  re.match(r'^(?=.*[\d])(?=.*[\w])(?=.*[_\W]).{8,16}$',password)
