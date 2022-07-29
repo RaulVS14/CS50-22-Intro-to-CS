@@ -230,4 +230,33 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
-    return apology("TODO")
+    user_id = session.get('user_id')
+    owned_stocks = db.execute(
+        "SELECT symbol, name, SUM(shares) as shares FROM purchases WHERE user_id = ? GROUP BY symbol", user_id)
+    if request.method == "POST":
+        symbol = request.form.get("symbol")
+        # Ensure symbol was provided
+        if not symbol:
+            return apology("select stock stock symbol", 400)
+        # Look for matching stock
+        matching_stock = None
+        for stock in owned_stocks:
+            if symbol == stock["symbol"]:
+                matching_stock = stock
+        if not matching_stock:
+            return apology("you don't own that stock", 400)
+        shares = request.form.get("shares")
+        # Ensure shares is provided and valid
+        if not is_valid_shares(shares):
+            return apology("must provide positive integer", 400)
+        # Ensure user owns enough of the stock
+        shares = int(shares)
+        if shares and shares > matching_stock["shares"]:
+            return apology("you don't own enough shares of that stock")
+        current_stock = lookup(symbol)
+        db.execute("INSERT INTO sales "
+                   "(user_id, symbol, name, price, shares, total, timestamp) "
+                   "VALUES (?, ?, ?, ?, ?, ?, datetime('now'))",
+                   user_id, matching_stock["symbol"], matching_stock["name"], current_stock["price"], shares,
+                   current_stock["price"] * shares)
+    return render_template("sell.html", stocks=owned_stocks)
