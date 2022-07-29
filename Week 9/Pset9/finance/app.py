@@ -68,7 +68,7 @@ def index():
 @login_required
 def account():
     user_id = session["user_id"]
-    user = get_user(user_id, "id, cash, username, hash")
+    user = get_user(user_id, ["id", "cash", "username", "hash"])
     if request.method == "POST":
         old_password = request.form.get("old_password")
         new_password = request.form.get("new_password")
@@ -79,10 +79,10 @@ def account():
 
         # Ensure new password was provided
         if not new_password:
-            return apology("must provide new password ", 403)
+            return apology("must provide new password ", 400)
         # Ensure confirm password was provided
         if not confirm_password:
-            return apology("must confirm new password ", 403)
+            return apology("must confirm new password ", 400)
 
         # Ensure user has confirmed with existing password
         if user and not check_password_hash(user["hash"], old_password):
@@ -92,11 +92,28 @@ def account():
         if not safe_str_cmp(new_password, confirm_password):
             return apology("passwords didn't match")
 
-
         result = db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(new_password), user_id)
         if result:
             flash("Password updated")
     return render_template("account.html", user=user)
+
+
+@app.route("/add_amount", methods=["POST"])
+@login_required
+def add_amount():
+    user_id = session["user_id"]
+    user = get_user(user_id)
+    if request.method == "POST":
+        amount = request.form.get("amount")
+        if not amount:
+            return apology("provide correct amount", 400)
+        try:
+            amount = float(amount)
+        except Exception:
+            return apology("must be a decimal number")
+        update_cash(user_id, user["cash"] + amount)
+        flash(f"Added {usd(amount)} to your account")
+    return redirect("/account")
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -120,7 +137,7 @@ def buy():
             return apology("must provide positive integer", 400)
         shares = int(shares)
         user_id = session.get('user_id')
-        user = get_user(user_id, "id, cash")
+        user = get_user(user_id)
         if stock and user:
             total_cost = shares * stock['price']
             # Ensure user has enough cash
@@ -251,7 +268,7 @@ def register():
 def sell():
     """Sell shares of stock"""
     user_id = session.get('user_id')
-    user = get_user(user_id, "id, cash")
+    user = get_user(user_id)
     owned_stocks = db.execute(
         "SELECT symbol, name, shares FROM owned_shares WHERE user_id = ?", user_id)
     if request.method == "POST":
@@ -326,8 +343,10 @@ def handle_owned_stock(user_id, symbol, name, shares):
         return False
 
 
-def get_user(user_id, fields):
-    user_data = db.execute(f"SELECT {fields} FROM users WHERE id = ?", user_id)
+def get_user(user_id, fields=None):
+    if fields is None:
+        fields = ["id", "cash"]
+    user_data = db.execute(f"SELECT {', '.join(fields)} FROM users WHERE id = ?", user_id)
     if len(user_data) == 1:
         return user_data[0]
     return False

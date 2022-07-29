@@ -7,13 +7,22 @@
 {% block main %}
     <h1 class="text-start">Account info</h1>
     <div class="row">
-        <div class="col-12 text-start">
-           <p>Name: {{ user["username"] | capitalize }}</p>
-           <p>Cash amount: {{ user["cash"] | usd }} <a href="/add_cash">Add cash</a></p>
+        <div class="col-12 col-sm-5 col-md-3 text-start">
+            <h5>Details</h5>
+            <p>Name: {{ user["username"] | capitalize }}</p>
+            <p>
+                Cash amount: {{ user["cash"] | usd }}
+            </p>
+            <form action="/add_amount" method="POST">
+                <div class="input-group">
+                    <input type="number" class="form-control" min="0" step=0.01 name="amount">
+                    <button class="btn btn-primary" type="submit">Add cash</button>
+                </div>
+            </form>
         </div>
         <div class="col-12 col-sm-5 col-md-3">
             <h5 class="text-start">Update password</h5>
-            <form action="/account" method="post" >
+            <form action="/account" method="post">
                 <div class="mb-3">
                     <input class="form-control" id="password" name="old_password" placeholder="Old password" type="password">
                 </div>
