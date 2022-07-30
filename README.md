@@ -794,6 +794,7 @@ Requirements:
     * store hash of user’s password
       * use `generate_password_hash`
   * create new template for registration
+  * give 10000 to user
 * implement `quote`
   * require input stock’s symbol, input name=`symbol`
   * submit via `POST` to `/quote`

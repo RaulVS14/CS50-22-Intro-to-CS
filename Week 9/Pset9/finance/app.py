@@ -31,6 +31,8 @@ db = SQL("sqlite:///finance.db")
 if not os.environ.get("API_KEY"):
     raise RuntimeError("API_KEY not set")
 
+BASE_CASH = 10000
+
 
 @app.after_request
 def after_request(response):
@@ -146,7 +148,8 @@ def buy():
             total_cost = shares * stock['price']
             # Ensure user has enough cash
             if user['cash'] < total_cost:
-                return apology(f"not enough cash to buy {shares} for {usd(stock['price'])}")
+                return apology(
+                    f"not enough cash({usd(user['cash'])}) to buy {shares} for {usd(stock['price'])} at total of {usd(total_cost)}")
             # Update owned_stock table
             handle_owned_stock(user_id, stock["symbol"], stock["name"], shares)
             # Register purchase to transaction table
@@ -248,7 +251,7 @@ def register():
         else:
             rows = db.execute("SELECT * FROM users where username = ?", username)
             if len(rows) == 1:
-                return apology("username already exists", 403)
+                return apology("username already exists", 400)
         # Ensure password was submitted
         if not password:
             return apology("must provide password", 400)
@@ -260,8 +263,9 @@ def register():
             return apology("passwords must match", 400)
         if not validate_password_pattern(password):
             return apology("Must consist of 8-16 characters of letters, numbers and symbols")
-        key = db.execute("INSERT INTO users (username, hash, cash) VALUES (?, ?, 0)", username,
-                   generate_password_hash(password))
+        key = db.execute(
+            f"INSERT INTO users (username, hash, cash) VALUES (?, ?, {BASE_CASH})", username,
+            generate_password_hash(password))
         if key:
             session["user_id"] = key
         # Redirect user to home page
@@ -341,8 +345,11 @@ def handle_owned_stock(user_id, symbol, name, shares):
     rows = db.execute("SELECT * FROM user_shares WHERE user_id = ? AND symbol = ?", user_id, symbol)
     if len(rows) == 1:
         existing_stock = rows[0]
-        return db.execute("UPDATE user_shares SET shares = ? WHERE user_id = ? AND symbol = ?",
-                          existing_stock["shares"] + shares, user_id, symbol)
+        if existing_stock["shares"] + shares == 0:
+            return db.execute("DELETE FROM user_shares WHERE user_id = ? AND symbol = ?", user_id, symbol)
+        else:
+            return db.execute("UPDATE user_shares SET shares = ? WHERE user_id = ? AND symbol = ?",
+                              existing_stock["shares"] + shares, user_id, symbol)
     elif len(rows) == 0 and shares > 0:
         return db.execute("INSERT INTO user_shares (user_id, symbol, name, shares) VALUES (?, ?, ?, ?)", user_id,
                           symbol, name, shares)
@@ -374,5 +381,6 @@ def insert_transaction(transaction: Transaction):
         transaction["shares"],
         transaction["type"])
 
+
 def validate_password_pattern(password):
-    return  re.match(r'^(?=.*[\d])(?=.*[\w])(?=.*[_\W]).{8,16}$',password)
+    return re.match(r'^(?=.*[\d])(?=.*[\w])(?=.*[_\W]).{8,16}$', password)
