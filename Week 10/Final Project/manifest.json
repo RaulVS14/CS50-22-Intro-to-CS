@@ -1,0 +1,40 @@
+{
+  "name": "Chrome Daily Planner",
+  "description": "Helps user to plan their day by providing section for scheduled events and for daily tasks",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_png": {
+      "16": "./images/calendar.png",
+      "32": "./images/calendar.png",
+      "48": "./images/calendar.png",
+      "128": "./images/calendar.png"
+    }
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "/images/calendar.png",
+    "32": "/images/calendar.png",
+    "48": "/images/calendar.png",
+    "128": "/images/calendar.png"
+  },
+  "permissions": [
+    "background",
+    "identity",
+    "storage",
+    "alarms",
+    "notifications"
+  ],
+  "oauth2": {
+    "client_id": "403439953383-ubldt0d0ble1lkjb80pbc8e0mneuuv5l.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.readonly"
+    ]
+  },
+  "key": "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCuS68ksoyumBFk0r3jro8pkLMYJm+5JwagUC5C2L9CcFWvVDKHVOfgwhtNh+w6bC1EiLBFEVfH/2jJosa2TJQVIMVW1t0dKdmWuYcf14nmtx7jwk4NLb5s7AUabtjpo3nsEnUqz8CH0j08bsWVzO8F9noJ9EBoa+6iHH9psAvisi8xscnINAR7a1Z7Y/FRB0HI09JuU/dvW+59d0HmnLXfzwxlB254zxwtKFf+UGYZsOyLwzhU/BficDM8etA05LPnA5pNsslRU6xCuj4uQBsZ36cs1av5r+nS78sJu5VRy+BwTvv4NHCXSGbsfwEVgs/HFSuxD02iI6EgVscL+lxJAgMBAAECggEABQsyo8y47np/ElxY22RbRzglPp8qH4EGG5CGbi/IhRssF5lHpwvpc+MaGCnFR8GGo9OSykTgtexps2APAQqBRIVAwK0SE/x4i/iNdPnvRypobe3bBV2cA5nm4edwRn6REihMlLMTXrrSQ9PuytF130XNLUmQrZTmAHHzq/LIvUQfbwLksZ15+BqCR/gNcPdzQH9h5Bo4NHxZG+Cn83VI8uUZP/UFHQ4medZr+RuU6FIFib1IRzfvtmYFmuUIIP80Ll/9O37dD2Z7OvOXur9Fy7fY8N47VzUKlPBNbJqBkKJKsLHaD1BYoHBLZvLoMIYLXdmsxQeXyNWZ/dY0t7sRaQKBgQDwIf4lm88J/faKyBKYlB5r49pZAI2ejsxpNehhKW4fQAq6GZNMupZpSd7Mw4AMyDoTugfWt2OCq1sFwJPSMwwLk4ryvcvO80ZL3fpu5WlMnEbRxi0aT+0oirVDYfQ5yToAlanUo50lI8z7JmXDYtQXMvOfYukg4IWIgLsl29L4BQKBgQC50AMNdgGM3vx4wT5krnsQFInsgYkFsssanEsSINZAv8CFt3kd4sRWShexOWOds5u3k92Hv7foqJLqit4DM0YKC4BESEeNd0n3p2N0h0UEN1FWWb552K8koljaR3naZqPrMdcQXExANXeHJJ089wVlgl/2cZnzMd+WcDOMaKyadQKBgQCBFASk+qfD2zvXRcyZL6VaoVQRW3bEsEW4mD2dXMPREH+zoWPIbtPDLO4Sa1Q9irONPwZPqKxY5Ps8kFPlPYNQBbM+4D7Zs3Mp/NxNGAwOHkMDJ9++sQ/uJwFggxrgpQYEom5z2q7x89iPeAhjipAvGDhUiLp/7bBZu7jdlNhGcQKBgHxQRJqO5r6euP75Gos1iLPbaeNHTqr3UZb+FeONAIrVPzK261spSf4JGAzDvnfVoEqTrNSTWbFYhuJQAfTWKvexdiE40lY9BsmfvZRKo8wMTmidJihS5ep2i0eOJmIN5YEHGUGi3ojevJc30dLl2UBul1FD86GXLmVxr6sypLe5AoGBAJGTOkit1f+3OvDj/0C/lpqK1CU4a1m/q+uKl0McD8xjwzOK0UMPpM2v74f+/W7riKM/cvmD97kKQzTAFSr36nXVVANOaN8ukbYhNDEK3Rm8agXig4FBvdZDqbPP0mw0FYm20hRJwsqvHtL4SGXcPf4XpZvCcosFBaqa9qxRI+GN"
+}

@@ -1,0 +1,101 @@
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    height: calc(100vh - 20px);
+    min-height: calc(500px - 20px);
+    width: 500px;
+    margin: 0;
+}
+
+body {
+    margin: 10px;
+    overflow-y: auto;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.col-6 {
+    width: calc(50% - 10px);
+}
+
+.col-12 {
+    width: 100%;
+
+}
+
+.add-form {
+    margin-bottom: 20px;
+}
+
+.add-form input:focus, .add-form input:active {
+    outline: none;
+    color: #124E78;
+}
+
+.add-form input {
+    border: 1px solid #124E78;
+    padding: 5px 10px;
+    border-radius: 5px 0 0 5px;
+    width: 60%;
+}
+
+#todo-error {
+    padding: 5px 0;
+    color: red;
+}
+
+.add-form button {
+    border: 1px solid #124E78;
+    background-color: #124E78;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    margin-left: -5px;
+    width: 40%;
+}
+
+.todo {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+.todo span{
+    max-width: 60%;
+}
+
+.todo--done span {
+    text-decoration: line-through;
+}
+
+.todo__controls button {
+    font-size: 16px;
+    border: none;
+    background: none;
+    border-radius: 10px;
+    margin: 0 5px;
+    color: white;
+}
+
+.todo__controls button:first-child {
+    background-color: #2e944b;
+    font-size: 16px;
+}
+
+.todo__controls button:first-child:hover {
+    background-color: darkgreen;
+}
+
+.todo__controls button:last-child {
+    background-color: red;
+}
+
+.todo__controls button:last-child:hover {
+    background-color: darkred;
+}
